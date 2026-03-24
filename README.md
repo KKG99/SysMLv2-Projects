@@ -1,126 +1,84 @@
-# Kiran Kumar's Skill Showcase
+# Kiran Kumar's SysMLv2 Projects
 
-Welcome to my portfolio! Here, you'll find a curated collection of works demonstrating my expertise and experience with SysMLv2.
+Welcome to my portfolio! Here you'll find a curated collection of SysMLv2 models demonstrating my expertise in model-based systems engineering.
 
 ## About Me
-I am a Master's student at the University of Bremen specializing in Space Engineering, with a solid foundation in Mechanical Engineering. Through diverse, user-centric projects, I've honed my skills and continue to explore various areas within the engineering realm. I'm committed to continuous learning and staying abreast of the latest advancements in technology.
 
-## Table of Contents
-- [SysMLv2: Garage Door Controller Model](#sysmlv2-garage-door-controller-model)
-- [SysMLv2: Structural Model for the Turn Indication Controller](#sysmlv2-structural-model-for-the-turn-indication-controller)
-- [SysMLv2: Behavioural Model for the Turn Indication Controller](#sysmlv2-behavioural-model-for-the-turn-indication-controller)
+I am a Master's student at the University of Bremen specialising in Space Engineering, with a solid foundation in Mechanical Engineering. Through diverse, user-centric projects I've honed my skills and continue to explore various areas within the engineering realm. I'm committed to continuous learning and staying abreast of the latest advancements in technology.
 
-## SysMLv2: Garage Door Controller Model
+## Projects
 
-### Overview
-This work demonstrates my proficiency with SysMLv2 through the modeling of a Garage Door Controller (GDC) system. The GDC controls the up and down movements of a garage door via an electric motor and handles commands such as DOWN, UP, STOP, and REVERSE based on inputs from a remote control, door sensors, and a light sensor for safety.
+| Directory | Project | Description |
+|-----------|---------|-------------|
+| [`turn-indication-controller/`](./turn-indication-controller/) | Turn Indication Controller | Behavioural and structural SysMLv2 models for a vehicle turn-indication system |
+| [`garage-door-controller/`](./garage-door-controller/) | Garage Door Controller | Full SysMLv2 model (state machine + structure + requirements) for a GDC system |
 
-### Requirements
-#### Safety Requirements
-- The BeamCrossed signal from the light sensor must trigger a REVERSE command to ensure safety.
+---
 
-#### Structural Requirements
-- The system must include a physical barrier around the motor to prevent physical contact.
+## Turn Indication Controller
 
-#### Functional Requirements
-- The remote control can start and stop the door's movement.
-- The system can pause and resume the door movement at any point.
-- A manual override option is available for emergency use.
+📁 [`turn-indication-controller/`](./turn-indication-controller/)
 
-### Operational Environment
-The GDC operates within an environment including:
-- Remote Control Device (ButtonPressed signal)
-- Garage Door Mechanics (DoorDown and DoorUp signals)
-- Light Sensor (BeamCrossed signal)
-- Electric Motor (commands: DOWN, UP, STOP, REVERSE)
+| Model | File |
+|-------|------|
+| Behavioural model | [`turn-indication-controller/behavioural-model.zip`](./turn-indication-controller/behavioural-model.zip) |
+| Structural model | [`turn-indication-controller/structural-model.zip`](./turn-indication-controller/structural-model.zip) |
 
-### System Components
-#### Parts
-- Remote Control
-- Light Sensor
-- Garage Door Mechanism
+### Behavioural Model
 
-#### Target System
-- Garage Door Controller (GDC)
+Completes the `AutomotiveDomainLibrary/ApplicationLogic/ControlLogic` perform action used in the rear controller to decide commands sent over the CAN bus. The decision logic depends on:
 
-#### Interfaces
-- Ports and signals to communicate with the motor and sensors.
-- Use of pre-defined signals (ButtonPressed, MotorControlCmd) and additional signals as needed.
+- `BatteryVoltagePort`
+- `TurnIndicationLeverPort`
+- `EmergencyFlashButtonPort`
+- `IgnitionPort`
 
-### Behavior Model
-The GDC's behavior is defined using a state machine that manages the door's states and transitions based on the received signals and commands.
-
-### Safety Satisfaction Relations
-Requirements are traced to model elements to ensure fulfillment:
-- Structural requirements: Physical barrier around the motor.
-- Functional requirements: Handling of ButtonPressed, DoorDown, DoorUp, and BeamCrossed signals.
-
-## SysMLv2: Structural Model for the Turn Indication Controller
-
-### Overview
-This work showcases my ability to model structural aspects using SysMLv2 and trace structural model elements to requirements.
-
-### Preliminaries
-1. Study the informal description of the Turn Indication Controller.
-2. Review the identification of structural requirements from previous exercises.
-3. Introduce a new package `Structure` in the `TurnIndicationController` project.
+State machines manage the transitions and control logic. A `CanController` model ensures that switching between active flashing modes sends an `OFF` command first, followed by a 50 ms delay before the new mode command.
 
 ### Structural Model
-Create a structural model of the Turn Indication Controller using:
-- Part definitions
-- Part usages
-- Port definitions
-- Port usages
-- Interfaces connecting ports
 
-### Requirements Tracing
-Create a package `SatisfactionRelations` to trace structural requirements to associated structural model elements. Trace requirements to concrete model element usages to ensure the existence of concrete instances in the model.
+Defines part definitions, part usages, port definitions, port usages, and interfaces. A `SatisfactionRelations` package traces structural requirements to concrete model element usages.
 
+---
 
-## SysMLv2: Behavioural Model for the Turn Indication Controller
+## Garage Door Controller
 
-### Overview
-This work demonstrates my capability in modeling and implementing the behavioral aspects of a system using SysMLv2.
+📁 [`garage-door-controller/`](./garage-door-controller/)
 
-### Preliminaries
-1. Study the informal description of the Turn Indication Controller.
-2. Review the provided reference solutions and behavioral models for `CanController`, `DashboardController`, and `LampCtrlSlave`.
-3. Study the behavioral requirements concerning the control of flashing indication lights based on battery state, turn indication lever, emergency flashing button, and ignition.
+| Model | File |
+|-------|------|
+| Full GDC model | [`garage-door-controller/model.zip`](./garage-door-controller/model.zip) |
 
-### Flashing Control Behaviour Model
-Complete the perform action of `AutomotiveDomainLibrary/ApplicationLogic/ControlLogic` used in the rear controller to decide commands to send over the CAN bus. This decision depends on:
-- BatteryVoltagePort
-- TurnIndicationLeverPort
-- EmergencyFlashButtonPort
-- IgnitionPort
+The Garage Door Controller (GDC) manages the up/down movement of a garage door via an electric motor, handling commands `DOWN`, `UP`, `STOP`, and `REVERSE` based on inputs from a remote control, door sensors, and a light sensor for safety.
 
-Use state machines to model and manage the transitions and control logic.
+### Requirements
 
-### CAN Controller
-Model the perform action of the `CanController` to ensure that switching between different active flashing modes sends an OFF command first, followed by a 50ms delay before sending the new active flashing mode command.
+- **Safety:** The `BeamCrossed` signal from the light sensor triggers a `REVERSE` command.
+- **Structural:** A physical barrier around the motor prevents direct physical contact.
+- **Functional:** Remote-controlled start/stop, pause/resume at any point, and manual override for emergencies.
 
-### Tracing Behavioural Requirements
-Extend the package `SatisfactionRelations` to trace the behavioral requirements on the `ControlLogic` behavior to the newly introduced behavioral model. Ensure behavioral requirements are linked to structural components performing the suitable behavior.
+### Operational Environment
 
-## Usage of the models uploded
-To work with these models:
-#### Prerequisites:
-- Eclipse IDE: Download and install the Eclipse IDE.
-- SysMLv2 Plugin: Install the SysMLv2 plugin in Eclipse:
-  - Open Eclipse.
-  - Go to Help > Eclipse Marketplace.
-  - Search for SysMLv2 and install the plugin.
+| Component | Signal(s) |
+|-----------|-----------|
+| Remote Control Device | `ButtonPressed` |
+| Garage Door Mechanics | `DoorDown`, `DoorUp` |
+| Light Sensor | `BeamCrossed` |
+| Electric Motor | `DOWN`, `UP`, `STOP`, `REVERSE` |
 
-#### Steps to Use the Model:
-1. Extract the Project Files:
-   - Unzip the project files and ensure the folders are accessible.
-2. Open Eclipse:
-   - Start your Eclipse IDE.
-3. Import the Project:
-   - Navigate to File > Import > Existing Projects into Workspace.
-   - Select the folder where the project is extracted.
-   - Ensure all files are visible in the Project Explorer.
-4. Open SysML Diagrams:
-   - Right-click on any `.sysml` file (e.g., `Parts.sysml`).
-   - Choose `Open with SysML Editor`.
-   - Start exploring the model elements using the SysML diagram editor.
+---
+
+## Using the Models
+
+### Prerequisites
+
+- **Eclipse IDE** – [Download](https://www.eclipse.org/downloads/)
+- **SysMLv2 Plugin** – Install via *Help › Eclipse Marketplace*, search for **SysMLv2**
+
+### Steps
+
+1. **Download** the `.zip` file for the model you want to explore.
+2. **Extract** the archive to a local folder.
+3. **Open Eclipse** and go to *File › Import › Existing Projects into Workspace*.
+4. **Select** the extracted folder and confirm all project files are visible in the Project Explorer.
+5. **Open** any `.sysml` file, right-click it, and choose *Open with SysML Editor* to start exploring the model.
