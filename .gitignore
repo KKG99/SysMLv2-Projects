@@ -1,0 +1,28 @@
+# SysMLv2 Projects — .gitignore
+
+# Eclipse IDE artifacts
+.metadata/
+.settings/
+.classpath
+.project
+*.launch
+bin/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Linux
+*~
+
+# Extracted model output directories (keep only the source zips)
+*/extracted/
+*/output/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
